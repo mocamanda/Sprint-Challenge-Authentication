@@ -10,7 +10,7 @@ const UserSchema = Schema({
     required: true,
     unique: true,
     lowercase: true,
-  }
+  },
   password: {
     type: String,
     required: true,
@@ -21,6 +21,16 @@ const UserSchema = Schema({
 });
 
 UserSchema.pre('save', function(next) {
+  return bcrypt
+    .hash(this.password, 8)
+    .then(hash => {
+      this.password = hash;
+
+      return next();
+    })
+    .catch(err => {
+      return next(err);
+    });
   // https://github.com/kelektiv/node.bcrypt.js#usage
   // Fill this middleware in with the Proper password encrypting, bcrypt.hash()
   // if there is an error here you'll need to handle it by calling next(err);
