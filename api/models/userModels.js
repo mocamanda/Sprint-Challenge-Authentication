@@ -5,6 +5,16 @@ const Schema = mongoose.Schema;
 const SALT_ROUNDS = 11;
 
 const UserSchema = Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+  }
+  password: {
+    type: String,
+    required: true,
+  },
   // create your user schema here.
   // username: required, unique and lowercase
   // password: required
